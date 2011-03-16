@@ -1,0 +1,27 @@
+//TODO
+
+:site
+-----
+
+- Url para Titulos (h2/h3)
+
+:admin
+------
+
+- Controle de Login ( Usuarios )
+
+- Integracao com TINYMCE - (font textarea aumentar)
+
+- Upload Imagem ( Galeria )
+
+- divs filhas na pagina (campo novo no bd para gerar essa arvore)
+
+- Validacao forms admin por ajax, jquery
+
+- plugin extensao do tinymce para listar images
+
+- Layout images, degrades, etc... ( Trash )
+
+- CSS
+
+

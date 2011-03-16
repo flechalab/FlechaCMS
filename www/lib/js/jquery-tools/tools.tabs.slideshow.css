@@ -1,0 +1,122 @@
+
+/* container for slides */
+.slide-items {
+	background:#000000 url(../jquery-ui/images/ui-bg_gloss-wave_55_000000_500x100.png) 50% top repeat-x;
+	border:1px solid #CCC;
+	position:relative;	
+	height:210px;
+	width:450px;
+	float:left;	
+	margin:15px;
+	cursor:pointer;
+	
+	/* CSS3 tweaks for modern browsers */
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	-moz-box-shadow:0 0 25px #666;
+	-webkit-box-shadow:0 0 25px #666;	
+}
+
+/* single slide */
+.slide-items div {
+	display:none;
+	position:absolute;
+	float: left;
+	top:0;
+	left:0;
+	margin:7px;
+	padding:15px 30px 15px 15px;
+	height:180px;
+	font-size:14px;
+	color: #FFF;
+	text-align: justify;
+}
+
+/* header */
+.slide-items h3 {
+	font-size:26px;
+	font-weight:normal;
+	margin:0 0 50px 0;
+}
+
+.slide-items h3 a {
+	color: rgb(145, 183, 38);
+	text-decoration: none !important;
+}
+
+/* tabs (those little circles below slides) */
+.slide-tabs {
+	clear:both;
+	margin: 18px 0 0 410px;
+	position: absolute;
+	z-index: 1;
+	width:70px;
+}
+
+/* single tab */
+.slide-tabs a {
+	float:left;
+	width:6px;
+	height:17px;
+	margin:3px;
+	padding: 0 3px;
+	display:block;
+	background:url(/lib/images/logos/logo-flechaweb-small-bw.png) 0 0 no-repeat;
+	font-size:10px;
+	color: #FFF;
+	text-decoration: none;
+	filter:Alpha(Opacity=60);
+	opacity: 0.6;
+}
+
+/* mouseover state */
+.slide-tabs a:hover {
+	color: #FFF;
+	font-size:11px;
+	background:url(/lib/images/logos/logo-flechaweb-small-bw.png) 0 0 no-repeat;
+	filter:Alpha(Opacity=90);
+	opacity: 0.9;	
+}
+
+/* active state (current page state) */
+.slide-tabs a.current {
+	font-size:11px;
+	color: #FFF; 
+	text-decoration: underline;
+	background:url(/lib/images/logos/logo-flechaweb-small.png) 0 0 no-repeat;
+	filter:Alpha(Opacity=90);
+	opacity: 0.9;
+} 	
+
+
+/* prev and next buttons */
+.forward, .backward {
+	float:left;
+	margin-top:140px;
+	background:#fff url(/tools/img/scrollable/arrow/hori_large.png) no-repeat;
+	display:block;
+	width:30px;
+	height:30px;
+	cursor:pointer;
+	font-size:1px;
+	text-indent:-9999em;	
+}
+
+/* next */
+.forward 			{ background-position: 0 -30px; clear:right; }
+.forward:hover 		{ background-position:-30px -30px; }
+.forward:active 	{ background-position:-60px -30px; } 
+
+
+/* prev */
+.backward:hover  	{ background-position:-30px 0; }
+.backward:active  	{ background-position:-60px 0; }
+
+/* disabled navigational button. is not needed when tabs are configured with rotate: true */
+.disabled {
+	visibility:hidden !important;		
+}
+
+.clear {
+	clear: both;
+}
