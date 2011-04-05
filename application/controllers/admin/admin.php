@@ -9,32 +9,39 @@ class Admin extends Controller {
 		$this->load->model('SiteModel');
 		$this->load->library('Html');
 		$this->html->setTemplateMode('adm');
-	
 	}
 	
 	public function index() {
-		$data['title'] = '> Manutenção do Site';
-		$data['items'] = array('pages' => 'Páginas',
-		                       'users' => 'Usuários');
-				
-		$this->html->output('admin/admin', $data);
+
+		$this->login();
+
+		$data['title']    = 'Manutenção do Site';
+		$data['subtitle'] = 'Escolha uma das opções abaixo:';
+		$data['uri']      = '';
+		$data['items']    = array( array('id'      => 'pages',
+			                             'desc'    => 'Páginas',
+										 'tooltip' => 'Manutenção de Páginas'),
+                                   array('id'      => 'users',
+			                             'desc'    => 'Usuários',
+										 'tooltip' => 'Manutenção de Usuários'),
+                                   array('id'      => 'confifg',
+			                             'desc'    => 'Configurações',
+										 'tooltip' => 'Configurações do Site') );
+
+		$this->html->output('admin/list', $data);
 
 	}
-	
-	
 	
 	public function login() {
 		
 	}
 	
 	public function logon($user, $pass) {
-		$user = $this->SiteModel->getUser($user);
+		$user = $this->UserModel->getUser($user);
 		
 		if($user==true) {
-		
+			$_SESSION['user'] = $user;
 		}
-		
-		
 	}
 	
 	public function logout() {

@@ -1,6 +1,7 @@
 <?php
+// test
 //echo $_SERVER['REQUEST_URI'];
-//die();
+
 /*
 |---------------------------------------------------------------
 | PHP ERROR REPORTING LEVEL

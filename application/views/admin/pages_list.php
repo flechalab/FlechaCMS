@@ -8,7 +8,7 @@
 <div id="container">
 	
 	<h3><?php echo $title; ?></h3>
-	
+
 	<table id="pages-list">
 		<thead>
 			<tr>
@@ -48,5 +48,5 @@
 		?>
 		</tbody>
 	</table>
-	
+
 </div>

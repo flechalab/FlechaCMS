@@ -18,14 +18,22 @@ class Pages extends Controller {
 	 * Index function carrega lista das paginas atuais do site
 	 */
 	function index() {
-		$data['title'] = '> Lista de Páginas do Site';
-		$data['items'] = $this->SiteModel->getPage();
+		$data             = array();
+		$data['title']    = 'Lista de Páginas do Site';
+		$data['subtitle'] = 'Clique sobre a página deseja para editar:';
+		$data['uri']      = 'pages/';
 		
-		for ( $i=0; $i < count($data['items']); $i++ ) {
-			$data['items'][$i]['updated_at'] = $this->datefunctions->dateTimeFormated($data['items'][$i]['updated_at']);
+		$pages            = $this->SiteModel->getPage(NULL, 'id');
+		
+		for ( $i=0; $i < count($pages); $i++ ) {
+			$data['items'][$i]['id']      = $pages[$i]['id'];
+			$data['items'][$i]['desc']    = $pages[$i]['title'];
+			$data['items'][$i]['tooltip'] = 'Atualizado em: ' .
+			                                $this->datefunctions->
+											dateTimeFormated($pages[$i]['updated_at']);
 		}
 		
-		$this->html->output('admin/pages_list', $data);
+		$this->html->output('admin/list', $data);
 	}
 	
 	
@@ -44,16 +52,31 @@ class Pages extends Controller {
 		// library -> form_validation
 		$this->load->library('form_validation');
 
+		$form = array(
+						array('id'        => 'page',
+							  'title'     => 'ID Pagina',
+							  'validation'=> 'required|alpha_numeric|min_length[3]|max_length[100]'),
+						array('id'        => 'title',
+							  'title'     => 'Titulo',
+							  'validation'=> 'required|alpha_numeric|min_length[3]|max_length[200]'),
+						array('id'        => 'header',
+							  'title'     => 'Sub Titulo',
+							  'validation'=> 'max_length[250]'),
+						array('id'        => 'tooltip',
+							  'title'     => 'Tooltip',
+							  'validation'=> 'max_length[250]')
+					);
+
 		// set das regras de validacao
-		$this->form_validation->set_rules('page', 'ID Pagina', 'required|alpha_numeric|min_length[3]|max_length[100]');
-		$this->form_validation->set_rules('title', 'Titulo', 'min_length[3]|max_length[200]');
-		$this->form_validation->set_rules('header', 'Header', 'max_length[250]');
-		$this->form_validation->set_rules('tooltip', 'Tooltip', 'max_length[250]');
+
+		foreach($form as $item) {
+			$this->form_validation->set_rules($item['id'], $item['title'], $item['validation']);
+		}
 		
 		// preparando data
-		$data       = array('id'=>'', 'id_company'=>'', 'page'=>'', 'title'=>'', 'header'=>'', 'tooltip'=>'');
-		$data['id'] = $this->uri->segment(4);
-		
+		$data         = array('id'=>'', 'id_company'=>'', 'page'=>'', 'title'=>'', 'header'=>'', 'tooltip'=>'');
+		$data['id']   = $this->uri->segment(4);
+		$data['form'] = $form;
 		
 		//***********************************************************
 		// carregando formulario (sem post) - opcao de novo ou edicao
@@ -68,7 +91,7 @@ class Pages extends Controller {
 
 			// carrega formulario 
 			$template = 'admin/pages_form';
-			
+			var_dump($data);die();
 			$this->html->output($template, $data);
 		}
 		
@@ -84,7 +107,9 @@ class Pages extends Controller {
 			$data['page']       = strtolower($data['page']);
 			
 			$result = $this->SiteModel->setPage($data);
-			
+
+			$view = array();
+
 			if($result===TRUE) {
 				$view['message']  = 'Dados da Página salvos com sucesso';
 				$view['url']      = '/admin/pages';
@@ -98,12 +123,13 @@ class Pages extends Controller {
 			$template = 'admin/message';
 
 			$this->html->output($template, $view);
-		}
-		
+		}	
+	
 	}
 	
 	public function del($id) {
 		$this->SiteModel->deletePage($id);
+		$data              = array();
 		$data['message']   = 'Página excluida do Site!';
 		$data['url']       = '/admin/pages';
 		$this->html->output('admin/message', $data);

@@ -1,12 +1,12 @@
 <?php
-class Users extends Controller {
+class Config extends Controller {
 	
-	private $html_title = 'Manutenção de Usuários da área administrativa do Site';
+	private $html_title = 'Manutenção de Configurações do Site';
 
 	public function __construct() {
 		parent::Controller();
 		//$this->output->enable_profiler(TRUE);
-		$this->load->model('UsersModel');
+		$this->load->model('ConfigModel');
 		$this->load->library('Html');
 		$this->html->setTemplateMode('adm');
 	}
@@ -16,10 +16,10 @@ class Users extends Controller {
 	 * Index function carrega lista das paginas atuais do site
 	 */
 	public function index() {
-		$data['title'] = '> Lista de Usuários do Site';
-		$data['items'] = $this->UsersModel->getUser();
+		$data['title'] = '> Lista de Configurações do Site';
+		$data['items'] = $this->ConfigModel->getConfig();
 				
-		$this->html->output('admin/users_list', $data);
+		$this->html->output('admin/config_list', $data);
 	}
 	
 	
@@ -39,15 +39,11 @@ class Users extends Controller {
 		$this->load->library('form_validation');
 
 		// set das regras de validacao
-		$this->form_validation->set_rules('user', 'Usuário',   'trim|required|alpha_numeric|min_length[3]|max_length[100]|strtolower|xss_clean');
-		$this->form_validation->set_rules('pass', 'Password',  'trim|max_length[250]|md5');
-		$this->form_validation->set_rules('name', 'Nome',      'trim|required|callback_check_name|min_length[3]|max_length[100]');
-		$this->form_validation->set_rules('phone', 'Telefone', 'trim|alpha_numeric|min_length[7]|max_length[100]');
-		$this->form_validation->set_rules('mail', 'E-mail',    'trim|required|valid_email');
-		$this->form_validation->set_rules('active', 'Ativo',   'trim|required|numeric|min_length[1]|max_length[1]');
+		$this->form_validation->set_rules('config', 'Configuração',   'trim|required|alpha_numeric|min_length[3]|max_length[100]|strtolower|xss_clean');
+		$this->form_validation->set_rules('value', 'Valor',    'trim|required|min_length[1]|max_length[100]');
 		
 		// preparando data
-		$data       = array('id'=>'', 'id_company'=>'', 'user'=>'', 'pass'=>'', 'name'=>'', 'phone'=>'', 'mail'=>'', 'active'=>'');
+		$data       = array('id'=>'', 'config'=>'', 'value'=>'');
 		$data['id'] = $this->uri->segment(4);
 		
 		
@@ -57,14 +53,12 @@ class Users extends Controller {
 		
 		if($this->form_validation->run()==FALSE) {
 			
-			// se id for numerico (=edicao), carrega valores do registro 
-			if( is_numeric($data['id']) ) {
-				$user = $this->UsersModel->getUser($data['id']);
-				$data = $user[0];
-			}
+			// carrega valores do registro 
+			$config = $this->ConfigModel->getConfig($data['config']);
+			$data   = $config[0];
 
 			// carrega formulario 
-			$template = 'admin/users_form';
+			$template = 'admin/config_form';
 			
 			$this->html->output($template, $data);
 		}
@@ -76,19 +70,16 @@ class Users extends Controller {
 			
 			// preparando data (com post)
 			$data = array_merge($data, $_POST);
-			
-			$data['id_company'] = COMPANY_ID;
-			//$data['user']       = strtolower($data['user']);
-			
-			$result = $this->UsersModel->setUser($data);
+						
+			$result = $this->ConfigModel->setConfig($data);
 			
 			if($result===TRUE) {
-				$view['message']  = 'Dados do Usuário salvos com sucesso';
-				$view['url']      = '/admin/users';
+				$view['message']  = 'Configurações foram salvas.';
+				$view['url']      = '/admin/config';
 			}
 			else {
 				// messagem q pagina ja existe
-				$view['message']  = 'Usuário existente. Utilize um outro ID de Usuário';
+				$view['message']  = 'Erro ao Salvar as Configurações do Site';
 				$view['url']      = 'Javascript:history.back();';
 			}	
 			
@@ -98,10 +89,11 @@ class Users extends Controller {
 		}
 		
 	}
-	
+
+
 	public function del($id) {
-		$this->SiteModel->deleteUser($id);
-		$data['message']   = 'Usuário excluido do Site!';
+		//$this->SiteModel->deleteUser($id);
+		$data['message']   = 'Configurações do Site não podem ser Excluidas!';
 		$data['url']       = '/admin/users';
 		$this->html->output('admin/message', $data);
 	}

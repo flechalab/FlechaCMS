@@ -45,6 +45,14 @@ define('COMPANY_ID', '1');
 define('COMPANY_NAME', 'Flecha Web');
 
 define('SITE_NAME', 'Flecha Web Desenvolvimento');
+define('ADMIN_TITLE', 'Area de Manutenção do Site');
+define('ADMIN_TITLE_PAGES', 'Páginas');
+define('ADMIN_TITLE_USERS', 'Usuários');
+define('ADMIN_TITLE_CONFIG', 'Configurações');
+
+define('ADMIN_NAVIGATION_NEW',  'Novo');
+define('ADMIN_NAVIGATION_BACK', 'Voltar');
+define('ADMIN_NAVIGATION_SAVE', 'Salvar');
 
 /* End of file constants.php */
 /* Location: ./system/application/config/constants.php */

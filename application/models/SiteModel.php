@@ -5,14 +5,14 @@ class SiteModel extends Model {
 		parent::Model();
 	}
 	
-	public function getPage($page=NULL) {
+	public function getPage($page=NULL, $order='page') {
 		
 		$this->db->where('id_company', COMPANY_ID);
 
 		if($page!=NULL)
 		$this->db->where('page', $page);
 
-		$this->db->order_by('page','asc');
+		$this->db->order_by($order,'asc');
 		
 		$query = $this->db->get('site-pages');
 		return $query->result_array();

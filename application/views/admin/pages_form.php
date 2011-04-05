@@ -9,7 +9,18 @@
 	<?php echo form_open('admin/pages/' . $id) ?> 
 	
 	<fieldset>
-	
+
+		<?php
+		foreach($form as $item) {
+			?>
+			<label for="<?php echo $item['id'] ?>"><?php echo $item['title'] ?>*: </label>
+			<input type="text" id="<?php echo $item['id'] ?>" name="<?php echo $item['id'] ?>" value="<?php echo set_value($item['id'], $$item['id'])?>" />
+			<?php echo form_error($item['id']); ?>
+			<br />
+			<?php
+		}
+		?>
+	<!--
 		<label for="page">ID Página*: </label>
 		<input type="text" id="page" name="page" value="<?php echo set_value('page', $page)?>" />
 		<?php echo form_error('page'); ?> 
@@ -29,7 +40,7 @@
 		<input type="text" id="tooltop" name="tooltip" value="<?php echo set_value('tooltip', $tooltip)?>" />
 		<?php echo form_error('tooltip'); ?> 
 		<br />
-		
+		-->
 	</fieldset>
 	
 	<div class="buttons">

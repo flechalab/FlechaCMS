@@ -71,6 +71,12 @@ $route['site/admin/users/set/new']      = "admin/users/set/new";
 $route['site/admin/users/set/(:num)']   = "admin/users/set/$1";
 $route['site/admin/users/del/(:num)']   = "admin/users/del/$1";
 
+// config
+$route['site/admin/config']              = "admin/config";
+$route['site/admin/config/new']          = "admin/config/set/new";
+$route['site/admin/config/(:any)']       = "admin/config/set/$1";
+$route['site/admin/config/set/new']      = "admin/config/set/new";
+$route['site/admin/config/set/(:num)']   = "admin/config/set/$1";
 
 /* End of file routes.php */
 /* Location: ./system/application/config/routes.php */
