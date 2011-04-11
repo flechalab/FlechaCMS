@@ -27,6 +27,7 @@ class SiteModel extends Model {
 	}
 	
 	public function setPage($data) {
+		
 		$check_page = $this->getPage($data['page']);
 		
 		if($data['id']=='new') {

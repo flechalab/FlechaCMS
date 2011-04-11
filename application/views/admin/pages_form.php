@@ -4,7 +4,7 @@
 
 <div id="container">
 
-	<h3> > Manutenção dos Dados da Pagina:</h3>
+	<h3>Manutenção dos Dados da Pagina:</h3>
 
 	<?php echo form_open('admin/pages/' . $id) ?> 
 	
@@ -20,7 +20,7 @@
 			<?php
 		}
 		?>
-	<!--
+		<!--
 		<label for="page">ID Página*: </label>
 		<input type="text" id="page" name="page" value="<?php echo set_value('page', $page)?>" />
 		<?php echo form_error('page'); ?> 

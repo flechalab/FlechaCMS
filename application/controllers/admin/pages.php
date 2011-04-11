@@ -52,31 +52,35 @@ class Pages extends Controller {
 		// library -> form_validation
 		$this->load->library('form_validation');
 
-		$form = array(
-						array('id'        => 'page',
-							  'title'     => 'ID Pagina',
-							  'validation'=> 'required|alpha_numeric|min_length[3]|max_length[100]'),
-						array('id'        => 'title',
-							  'title'     => 'Titulo',
-							  'validation'=> 'required|alpha_numeric|min_length[3]|max_length[200]'),
-						array('id'        => 'header',
-							  'title'     => 'Sub Titulo',
-							  'validation'=> 'max_length[250]'),
-						array('id'        => 'tooltip',
-							  'title'     => 'Tooltip',
-							  'validation'=> 'max_length[250]')
+		$id = $this->uri->segment(4); 
+		$id = isset($id) ? $id : 0;
+
+		$form = array('id'      => array('title'     => '',
+                                         'validation'=> '',
+                                         'value'     => $id),
+					  'page'    => array('title'     => 'ID Pagina',
+									     'validation'=> 'required|alpha_numeric|min_length[3]|max_length[100]',
+									     'value'     => ''),
+					  'title'   => array('title'     => 'Titulo',
+                                         'validation'=> 'required|alpha_numeric|min_length[3]|max_length[200]',
+                                         'value'     => ''),
+                      'header'  => array('title'     => 'Sub Titulo',
+                                         'validation'=> 'max_length[250]',
+                                         'value'     => ''),
+                      'tooltip' => array('title'     => 'Tooltip',
+                                         'validation'=> 'max_length[250]',
+                                         'value'     => '')
 					);
 
 		// set das regras de validacao
-
-		foreach($form as $item) {
-			$this->form_validation->set_rules($item['id'], $item['title'], $item['validation']);
+		foreach($form as $key => $item) {
+			$this->form_validation->set_rules($key, $item['title'], $item['validation']);
 		}
 		
-		// preparando data
-		$data         = array('id'=>'', 'id_company'=>'', 'page'=>'', 'title'=>'', 'header'=>'', 'tooltip'=>'');
-		$data['id']   = $this->uri->segment(4);
-		$data['form'] = $form;
+		// preparing data
+		//$data         = array('id'=>'', 'id_company'=>'', 'page'=>'', 'title'=>'', 'header'=>'', 'tooltip'=>'');
+		//$data['id']   = $this->uri->segment(4);
+		//$data['form'] = $form;
 		
 		//***********************************************************
 		// carregando formulario (sem post) - opcao de novo ou edicao
@@ -85,13 +89,19 @@ class Pages extends Controller {
 		if($this->form_validation->run()==FALSE) {
 			
 			// se id for numerico (=edicao), carrega valores do registro 
-			if( is_numeric($data['id']) ) {
-				$data = $this->SiteModel->getPageByID($data['id']);
-			}
+			if ($form['id']['value'] > 0) {
+                $values = $this->SiteModel->getPageByID($form['id']['value']);
 
-			// carrega formulario 
+                //$teste = array_map('array_push', array($form), array($values));
+                
+                foreach ($form as $key => $item) {
+                    $form[$key]['value'] = $values[$key];
+                }
+            }
+
+            // carrega formulario
 			$template = 'admin/pages_form';
-			var_dump($data);die();
+			var_dump($form); var_dump($values); var_dump($teste); die();
 			$this->html->output($template, $data);
 		}
 		
@@ -123,8 +133,7 @@ class Pages extends Controller {
 			$template = 'admin/message';
 
 			$this->html->output($template, $view);
-		}	
-	
+		}
 	}
 	
 	public function del($id) {
