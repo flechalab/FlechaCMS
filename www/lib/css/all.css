@@ -1,0 +1,24 @@
+/* 
+    Document   : all
+    Created on : 13/04/2011, 15:50:20
+    Author     : fernandodias
+    Description:
+    CSS to all html tags 
+*/
+
+body {
+	margin:0;
+	padding:0;
+	font:normal 12px/18px Arial, Helvetica, sans-serif;
+	color:#363636;
+}
+
+div, h1, h2, h3, h4, h5, h6, form, label, input, span, ul, li, p, a {
+	margin:0; padding:0;
+}
+
+ul 		{ list-style:none; }
+
+img		{ border:none; }
+
+.clear	{ font-size:0; line-height:0; clear:both; }

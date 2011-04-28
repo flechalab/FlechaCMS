@@ -1,24 +1,10 @@
-/* CSS Document */
+
 body {
-	margin:0; 
-	padding:0;
 	background:url(/lib/images/template/bg1.png) repeat-x 0 0 #FFFFFF;
-	font:normal 12px/18px Arial, Helvetica, sans-serif;
-	color:#363636;
 }
-
-div, h1, h2, h3, h4, h5, h6, form, label, input, span, ul, li, p, a { 
-	margin:0; padding:0; 
-}
-
-ul 		{ list-style:none; }
-img		{ border:none; }
-.clear	{ font-size:0; line-height:0; clear:both; }
-
 
 /* header start */
-
-#header {
+div#header {
 	position:relative;
 	width:778px; 
 	height:130px; 
@@ -26,13 +12,13 @@ img		{ border:none; }
 	color:#000000;
 }
 	
-#header img {
+div#header img {
 	position:absolute; 
 	left:0px; 
 	top:20px; 
 }
 	
-#header h1 {
+div#header h1 {
 	position:absolute; 
 	left:410px; 
 	top:174px; 
@@ -86,12 +72,14 @@ img		{ border:none; }
 
 /* top navigation end */
 
-/* body start */
-#body{
-	width:738px; margin:0 auto; padding:24px 0 10px 0;
+/* container */
+#container {
+	width:738px; margin:0 auto; padding:24px 0 10px 0; background-color: #FFF;
 }
-/* body end */
 
+#container .div-page {
+    position: relative;
+}
 
 /* left pannel start */
 
@@ -319,7 +307,6 @@ img		{ border:none; }
 	text-decoration:none; text-indent:-2000px; width:38px; height:13px; display:block; float:left;}
 
 /* footer end */
-
 
 
 /* tooltips */

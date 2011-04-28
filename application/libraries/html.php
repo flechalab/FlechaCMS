@@ -3,7 +3,7 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
  * 
- * Enter description here ...
+ * Class to generate general HTML 
  * @author fernandodias
  *
  */
@@ -40,11 +40,21 @@ Class Html {
 	}
 	
 	private function output_www($template, $data, $header) {
-		// cabecalho da pagina (header)
+
+        // cabecalho da pagina (header)
 		$this->ci->load->view('html_header', $header);
 		$this->ci->load->view('html_menu');
-		// template a ser carregado
-		$this->ci->load->view($template, $data);
+
+        // template a ser carregado
+		if(is_array($template)) {
+            foreach ($template as $item) {
+                $this->ci->load->view($item, $data);
+            }
+        }
+        else {
+            $this->ci->load->view($template, $data);
+        }
+
 		// rodape
 		$this->ci->load->view('html_footer');
 	}
@@ -56,26 +66,50 @@ Class Html {
 		$header['description'] = 'Área Administrativa do Site : ' . SITE_NAME;
 		// script para carregar tinymce
 		if(isset($this->tinymce)) $header['tinymce'] = $this->tinymce;
-		// titulo da pagina
-		$data['top_title']     = 'Manutenção do Site';
 		// cabecalho da pagina (header)
 		$this->ci->load->view('admin/header', $header);
-		// template a ser carregado
-		$this->ci->load->view($template, $data);
+		// template top/header a ser carregado
+		$this->ci->load->view('admin/top', $data);
+        
+        // template a ser carregado
+		if(is_array($template)) {
+            foreach ($template as $item) {
+                $this->ci->load->view($item, $data);
+            }
+        }
+        else {
+            $this->ci->load->view($template, $data);
+        }
+
 		// rodape
 		$this->ci->load->view('admin/footer');
 	}
+
+    public function output_ajax($data) {
+        if(is_array($data)) {
+             //TODO 
+            //echo http_build_query( array_map('http_build_query', $data) );
+            var_dump($data);
+        }
+        else {
+            echo $data;
+        }
+    }
+
+    public function output_json($data) {
+        echo json_encode($data);
+    }
 	
 	public function set_css($filename) {
 		$filename    = trim($filename);
-		$header_css  = "<link rel='stylesheet' type='text/css' href='/lib/css/{$filename}.css' />" . chr(10);
-		return $header_css;
+		$header_css  = "<link rel='stylesheet' type='text/css' href='/lib/css/{$filename}.css' />";
+		return $header_css . chr(10);
 	}
 	
 	public function set_js($filename) {
 		$filename   = trim($filename);
-		$header_js  = "<script type='text/javascript' src='/lib/js/{$filename}.js'></script>" . chr(10);
-		return $header_js;
+		$header_js  = "<script type='text/javascript' src='/lib/js/{$filename}.js'></script>";
+		return $header_js . chr(10);
 	}
 	
 	public function set_tinymce() {

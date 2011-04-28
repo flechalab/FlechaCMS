@@ -1,11 +1,17 @@
 <?php
-class Pages extends Controller {
-	
-	private $html_title = 'Manutenção das Páginas do Site';
+/**
+ * Classe do CMS para Manutencao das Paginas do Site
+ * @package flecha-site
+ */
+class Pages extends CI_Controller {
+
+    private $id    = 0;
+    private $page  = array();
+    private $divs  = array();
 	
 	public function __construct() {
-		parent::Controller();
-		//$this->output->enable_profiler(TRUE);
+		parent::__construct();
+		$this->output->enable_profiler(TRUE);
 		$this->load->model('SiteModel');
 		$this->load->library('Html');
 		$this->load->library('DateFunctions');
@@ -13,21 +19,22 @@ class Pages extends Controller {
 		//Admin::checkLogin();
 	}
 	
-	
 	/*
 	 * Index function carrega lista das paginas atuais do site
 	 */
 	function index() {
-		$data             = array();
-		$data['title']    = 'Lista de Páginas do Site';
-		$data['subtitle'] = 'Clique sobre a página deseja para editar:';
-		$data['uri']      = 'pages/';
-		
-		$pages            = $this->SiteModel->getPage(NULL, 'id');
+
+        $data               = array();
+		$data['title']      = 'Lista de Páginas do Site';
+		$data['subtitle']   = 'Clique sobre a página que deseja editar:';
+		$data['submenu']    = TRUE;
+		$data['uri']        = ADMIN_URL_PAGES;
+		$pages              = $this->SiteModel->getPage(NULL, 'id');
 		
 		for ( $i=0; $i < count($pages); $i++ ) {
 			$data['items'][$i]['id']      = $pages[$i]['id'];
-			$data['items'][$i]['desc']    = $pages[$i]['title'];
+			$data['items'][$i]['desc']    = (!empty($pages[$i]['title'])) ? 
+                                            $pages[$i]['title'] : $pages[$i]['page'];
 			$data['items'][$i]['tooltip'] = 'Atualizado em: ' .
 			                                $this->datefunctions->
 											dateTimeFormated($pages[$i]['updated_at']);
@@ -35,113 +42,214 @@ class Pages extends Controller {
 		
 		$this->html->output('admin/list', $data);
 	}
-	
+
 	
 	/*
 	 * funcao com tomada de decisao para inserir ou atualizar registro de pagina do site
 	 */
-	function set() {
-		
+	function set($id) {
+
 		//***********************************************************
 		// preparando recurso do CI, validacoes, info de view e data
 		//***********************************************************
 		
 		// helper -> form, url
-		$this->load->helper(array('form','url'));
+		//$this->load->helper(array('form','url'));
 
 		// library -> form_validation
-		$this->load->library('form_validation');
+		$this->load->library('form_validation'); // ci  lib
+        $this->load->library('ExtraValidation'); // ext lib
+        $this->load->library('NormalizeChar');   // ext lib
 
-		$id = $this->uri->segment(4); 
-		$id = isset($id) ? $id : 0;
+        // setting array with form data
+        $this->setId($id);
+        $this->setPage();
+        $this->setDivs();
 
-		$form = array('id'      => array('title'     => '',
-                                         'validation'=> '',
-                                         'value'     => $id),
-					  'page'    => array('title'     => 'ID Pagina',
-									     'validation'=> 'required|alpha_numeric|min_length[3]|max_length[100]',
-									     'value'     => ''),
-					  'title'   => array('title'     => 'Titulo',
-                                         'validation'=> 'required|alpha_numeric|min_length[3]|max_length[200]',
-                                         'value'     => ''),
-                      'header'  => array('title'     => 'Sub Titulo',
-                                         'validation'=> 'max_length[250]',
-                                         'value'     => ''),
-                      'tooltip' => array('title'     => 'Tooltip',
-                                         'validation'=> 'max_length[250]',
-                                         'value'     => '')
-					);
-
-		// set das regras de validacao
-		foreach($form as $key => $item) {
+        // set das regras de validacao
+		foreach($this->page as $key => $item) {
 			$this->form_validation->set_rules($key, $item['title'], $item['validation']);
 		}
-		
-		// preparing data
-		//$data         = array('id'=>'', 'id_company'=>'', 'page'=>'', 'title'=>'', 'header'=>'', 'tooltip'=>'');
-		//$data['id']   = $this->uri->segment(4);
-		//$data['form'] = $form;
-		
+
+        $this->form_validation->set_error_delimiters('<div class="form-error">', '</div>');
+				
 		//***********************************************************
 		// carregando formulario (sem post) - opcao de novo ou edicao
 		//***********************************************************
-		
 		if($this->form_validation->run()==FALSE) {
-			
-			// se id for numerico (=edicao), carrega valores do registro 
-			if ($form['id']['value'] > 0) {
-                $values = $this->SiteModel->getPageByID($form['id']['value']);
-
-                //$teste = array_map('array_push', array($form), array($values));
-                
-                foreach ($form as $key => $item) {
-                    $form[$key]['value'] = $values[$key];
-                }
-            }
-
-            // carrega formulario
-			$template = 'admin/pages_form';
-			var_dump($form); var_dump($values); var_dump($teste); die();
-			$this->html->output($template, $data);
+            $this->form();
 		}
 		
 		//***********************************************************
 		// ao enviar formulario (post) processa gravacao de dados
 		//***********************************************************
 		else {
-			
-			// preparando data (com post)
-			$data = array_merge($data, $_POST);
-			
-			$data['id_company'] = COMPANY_ID;
-			$data['page']       = strtolower($data['page']);
-			
-			$result = $this->SiteModel->setPage($data);
-
-			$view = array();
-
-			if($result===TRUE) {
-				$view['message']  = 'Dados da Página salvos com sucesso';
-				$view['url']      = '/admin/pages';
-			}
-			else {
-				// messagem q pagina ja existe
-				$view['message']  = 'Página já existe no Site. Utilize um outro ID';
-				$view['url']      = 'Javascript:history.back();';
-			}	
-			
-			$template = 'admin/message';
-
-			$this->html->output($template, $view);
+            $this->setData($_POST);
 		}
 	}
 	
+    
+    /*
+     * deleting page
+     **/
 	public function del($id) {
+
+        //TODO exluir divs,
+        // teste e vincular (dependencia) tab. divs com pages, para gerar erro
+        // ao deletar sem apagar divs
+        
 		$this->SiteModel->deletePage($id);
 		$data              = array();
 		$data['message']   = 'Página excluida do Site!';
-		$data['url']       = '/admin/pages';
+		$data['url']       = ADMIN_URL_PAGES;
 		$this->html->output('admin/message', $data);
 	}
+
+    /*
+     * getting id from uri segment
+     **/
+    private function getId() {
+		return $this->id;
+    }
+    
+    private function setId($id) {
+		$this->id = $id;
+    }
+    
+    private function getPage() {
+        return $this->page;
+    }
+    
+    /*
+     * array with data to html/form
+     **/
+    private function setPage() {
+
+		$this->page = array('id'      => array('title'     => '',
+                                               'validation'=> '',
+                                               'type'      => 'input',
+                                               'value'     => $this->getId() ),
+					        'page'    => array('title'     => 'ID Pagina',
+									           'validation'=> 'required|alpha_dash|min_length[3]|max_length[100]',
+                                               'type'      => 'input',
+									           'value'     => ''),
+					        'header'  => array('title'     => 'Nome da Página/Link Menu',
+                                               'validation'=> 'required|min_length[3]|max_length[200]',
+                                               'type'      => 'input',
+                                               'value'     => ''),
+                            'title'   => array('title'     => 'Titulo',
+                                               'validation'=> 'max_length[250]',
+                                               'type'      => 'input',
+                                               'value'     => ''),
+                            'tooltip' => array('title'     => 'Dica/Tooltip',
+                                               'validation'=> 'max_length[250]',
+                                               'type'      => 'input',
+                                               'value'     => '')
+					       );
+
+        // setting values if id exists
+        if ($this->page['id']['value'] > 0) {
+            $values = $this->SiteModel->getPageByID($this->page['id']['value']);
+            foreach ($this->page as $key => $item) {
+                $this->page[$key]['value'] = $values[$key];
+            }
+        }
+
+    }
+
+    /* array with div data */
+    private function getDivs() {
+        return $this->divs;
+    }
+
+    /* array with div data */
+    private function setDivs() {
+        try {
+            $this->divs = $this->SiteModel->getDivs($this->getId());
+        }
+        catch ( Exception $e ) {
+            show_error($e->getMessage());
+        }
+    }
+    
+    /* display html form */
+    public function form() {
+
+        // carrega formulario
+        $template = array( 'admin/form', 'html_page' );
+
+        $data = array();
+		$data['title']      = 'Manutenção de Página do Site';
+		$data['subtitle']   = '';
+		$data['submenu']    = TRUE;
+        $data['uri']        = ADMIN_URL_PAGES;
+        $data['form_url']   = ADMIN_URL_PAGES . '/' . $this->getId();
+        $data['form_label'] = 'Configurações da Página:';
+        $data['form']       = $this->getPage();  //data to form
+        $data['page']       = $this->SiteModel->getPage( $data['form']['page']['value'] );  //data to html_page
+        $data['divs']       = $this->getDivs();  //data to html_page
+        
+        $this->html->set_tinymce();
+        $this->html->output($template, $data);
+    }
+    
+    /* saving data */
+    public function setData($data) {
+        // preparando data (com post)
+        $data               = array_merge(array( 'id' => $this->getId() ), $data);
+        $data['id_company'] = COMPANY_ID;
+        //$data['page']       = $this->normalizechar->normalize($data['header']);
+        //$data['page']       = $this->normalizechar->replaceSpaces($data['page']);
+
+        try {
+            $this->SiteModel->setPage($data);
+            $view = array();
+            $view['message']  = 'Dados da Página salvos com sucesso';
+            $view['url']      = '/admin/pages';
+            $template = 'admin/message';
+            $this->html->output($template, $view);
+        }
+        catch ( Exception $e ) {
+            show_error($e->getMessage());
+        }
+        /*
+        $view = array();
+
+        if( $this->SiteModel->log === TRUE ) {
+            $view['message']  = 'Dados da Página salvos com sucesso';
+            $view['url']      = '/admin/pages';
+        }
+        else {
+            // messagem q pagina ja existe
+            $view['message']  = 'Erro ao salvar Dados. ' .$this->SiteModel->log_msg;
+            $view['url']      = 'Javascript:history.back();';
+        }
+        $template = 'admin/message';
+        $this->html->output($template, $view);
+         * 
+         */
+    }
+
+    public function ajax($option=false, $id=false) {
+        var_dump($option);        var_dump($id);
+        if($option===false || $id===false) { die('Option Declaration Error'); }
+        // TODO if option/method exists
+        $this->setId($id);
+        $get_option = 'get' . ucfirst($option);
+        $set_option = 'set' . ucfirst($option);
+        $this->$set_option();
+        $this->html->output_ajax($this->$get_option());
+    }
+
+    public function json($option=false, $id=false) {
+        //var_dump($option);        var_dump($id);
+        if($option===false || $id===false) { die('Option Declaration Error'); }
+        // TODO if option/method exists
+        $this->setId($id);
+        $get_option = 'get' . ucfirst($option);
+        $set_option = 'set' . ucfirst($option);
+        $this->$set_option();
+        $this->html->output_json($this->$get_option());
+    }
 
 }

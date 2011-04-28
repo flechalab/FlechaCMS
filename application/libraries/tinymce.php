@@ -28,7 +28,9 @@ class Tinymce {
 					
 						// Location of TinyMCE script
 						script_url : '/lib/js/tinymce/tiny_mce.js',
-				
+
+                        height : "230",
+
 						// General options
 						theme : "{$theme}",
 						language : 'pt',

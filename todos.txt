@@ -1,27 +1,36 @@
-//TODO
-
-:site
------
-
-- Url para Titulos (h2/h3)
-
-:admin
-------
-
+===
+API
+===
 - Controle de Login ( Usuarios )
+- Controle de sessao de acesso
+* Constants
+* Del Page, check if Divs exists
 
-- Integracao com TINYMCE - (font textarea aumentar)
 
-- Upload Imagem ( Galeria )
-
-- divs filhas na pagina (campo novo no bd para gerar essa arvore)
-
-- Validacao forms admin por ajax, jquery
-
-- plugin extensao do tinymce para listar images
-
-- Layout images, degrades, etc... ( Trash )
-
+============
+LITE/MOBILE
+(HTML/CSS)
+============
+- Controle de Users
 - CSS
+- Layout images, degrades, etc...
 
 
+============
+RICH VERSION
+(Javascript)
+============
+
+* Validacao forms admin por ajax, jquery
+* Upload Imagem ( Galeria )
+* Plugin extensao do tinymce para listar images
+
+
+========================
+DOCUMENTATION / TESTUNIT
+========================
+
+* Inline Code Documentation
+* PhpDoc
+* TestUnit
+* Fluxogram (Db, Classes, Process)

@@ -41,14 +41,27 @@
 |
 */
 
-$route['default_controller']  = "site";
-$route['scaffolding_trigger'] = "";
+$route['default_controller']                 = "site";
+$route['scaffolding_trigger']                = "";
 
-$route['site/admin']                    = "admin/admin";
+// main
+$route['admin']                              = "admin/admin";
+// ajax
+$route['admin/(:any)/ajax/(:any)']           = "admin/$1/ajax/$2";
 
-// TODO um rout que identifica todos
-//$route['site/admin/([a-z]+)/([a-z]+)']   = "admin/$1/$2";
+// form to edit divs
+$route['admin/pages/(:num)/divs']            = "admin/divs";
+$route['admin/pages/(:num)/divs/(:any)/del'] = "admin/divs/del/$2/$1";
+$route['admin/pages/(:num)/divs/(:any)']     = "admin/divs/set/$2/$1";
 
+// del pages
+$route['admin/(:any)/del/(:num)']            = "admin/$1/del/$2";
+
+$route['admin/(:any)/(:num)']                = "admin/$1/set/$2";
+$route['admin/(:any)']                       = "admin/$1";
+$route['(:any)']                             = "site/$1";
+
+/*
 // pages
 $route['site/admin/pages']              = "admin/pages";
 $route['site/admin/pages/new']          = "admin/pages/set/new";
@@ -77,6 +90,7 @@ $route['site/admin/config/new']          = "admin/config/set/new";
 $route['site/admin/config/(:any)']       = "admin/config/set/$1";
 $route['site/admin/config/set/new']      = "admin/config/set/new";
 $route['site/admin/config/set/(:num)']   = "admin/config/set/$1";
+*/
 
 /* End of file routes.php */
 /* Location: ./system/application/config/routes.php */

@@ -1,5 +1,5 @@
 <?php
-class Users extends Controller {
+class Users extends CI_Controller {
 	
 	private $html_title = 'Manutenção de Usuários da área administrativa do Site';
 

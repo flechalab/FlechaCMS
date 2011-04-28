@@ -1,8 +1,8 @@
 <?php
-class UsersModel extends Model {
+class UsersModel extends CI_Model {
 	
 	public function __construct() {
-		parent::Model();
+        parent::__construct();
 	}
 	
 	public function getUser($id=NULL, $type='id') {

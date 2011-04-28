@@ -1,13 +1,11 @@
-<h2><?php echo $title; ?></h2>
 
-<div id="container">
-
-	<h3><?php echo $subtitle ?></h3>
+<div id="container-admin">
 
 	<ul class="admin-list">
 		<?php
 		foreach($items as $item) {
-			echo "<li><a href='/admin/{$uri}{$item['id']}' title='{$item['tooltip']}'>{$item['desc']}</a></li>";
+			echo "<li><a href='{$uri}/{$item['id']}' title='{$item['tooltip']}'>";
+            echo "{$item['desc']}</a></li>";
 		}
 		?>
 	</ul>

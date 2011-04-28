@@ -2,7 +2,7 @@
 	
 <div id="container">
 
-	<h3>Escolha uma das opções abaixo:</h3>
+	<h3><?php echo $subtitle ?>:</h3>
 
 	<ul class="admin-list">
 		<?php 

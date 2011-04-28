@@ -1,0 +1,75 @@
+------------------------
+Projeto: Flecha-Site CMS
+------------------------
+
+Projeto com um simples CMS para gerenciamento e manutenção de 
+pequenos portais e hotsites.
+
+O site é gerado dinamicamente com os dados do banco de dados.
+
+A sua estrutra/layout é definida de acordo com o CSS (style.css) existente.
+
+O projeto é baseado no Framework CodeIgniter 2 (CI), além de atualmente usar bando de dados MYSQL.
+
+===============================================================
+
+Etapa 1 API - ok
+
+Etapa 2 MVC 
+      2.1 Model - ok
+      2.2 Controller - ok
+      2.3 View - ok
+
+Etapa 3 Lite Version
+      3.1 Html - ok
+      3.2 CSS
+
+Etapa 4 Rich Version
+
+===============================================================
+
+
+Estrutura do Projeto (/application do framework):
+
+/config
+	config.php					arquivo de configuracao da aplicacao
+	constants.php				list de constantes utilizadas no site (em implantacao)
+	routes.php					regras de roteamento de uris
+	
+/controllers
+	site.php					Controle Principal de geracao de paginas da app
+	/admin
+		Admin.php				Validacao de Login / Pagina Inicial do CMS
+		Pages.php				Metodos de recuperacao/manutencao de dados referentes a pages (paginas)
+		Divs.php				Metodos de recuperacao/manutencao de dados referentes as divs das paginas
+		Config.php				Configuracoes gerais da app
+		Users.php				Gerenciamento de Usuarios
+	
+/libraries
+		DateFunctions.php		Funcoes para formatacao de datas.
+		ExtraValidation.php		Validacoes Extras para Formulario do CI
+		Html.php				Classe de gerenciamento para printar template do HTML, 
+								conforme a solicitacao da app. Utiliza metodos do CID (load->view).
+		NormalizeChar.php		Metodos para normalize de texto, remocao e substituicao de espacos.
+		Tinymce.php				Class para controle do editor Tinymce no CI.
+		
+/models
+		ConfigModel.php			Class com getters/setters na table config.
+		SiteModelo.php			Class com getters/setters na table pages/divs.
+		UsersModel.php			Class com getters/setters na table users.
+		
+/views
+	html_footer.php				Rodape do html da pagina
+	html_header.php				Cabecalho do html (header) da pagina
+	html_menu.php				Parte superior e Menu do Site
+	html_page.php				View que monta dinamicamente os blocos (divs) vinculados a pagina
+								solicitada. Dados gerado em array pelo controle.
+	/views/admin
+		new.php					Template com div para inserir nova div na pagina
+		edit.php				Div para editar div da pagina
+		footer.php				Rodape da area admin
+		form.php				Template com form e loop para habilitar campos para edicao
+		header.php				Cabecalho da area admin
+		list.php				Template com loop para gerar lista de itens
+		message.php				Template para messagens gerais 
+		top.php					Menu Superior da area admin

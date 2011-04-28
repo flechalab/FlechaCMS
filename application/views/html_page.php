@@ -1,11 +1,9 @@
-	<!-- body start -->
-	
-	<div id="body">
+	<!-- container start -->	
+	<div id="container">
 		
 		<?php 
-		
 		echo chr(10) . chr(13);
-		
+
 		// titulo da pagina (se houver)
 		if(!empty($page[0]['title'])) {
 			echo str_repeat(chr(9), 2);
@@ -13,22 +11,21 @@
 			echo chr(10) . chr(13); 
 		}
 
-		// subtitulo da pagina (se houver)
-		if(!empty($page[0]['title'])) {
-			echo str_repeat(chr(9), 3);
-			echo "<p><strong>{$page[0]['header']}</strong></p>"; 
-			echo chr(10) . chr(13);
-		}
-
-		// print de cada div/table da pagina 
+        // print de cada div/table da pagina
 		foreach($divs as $div) {
  		
  			if($div['div_type']=='div') {
  				
  				// div main
  				echo str_repeat(chr(9), 2);
- 				echo "<div id='{$div['div_id']}'>";
+ 				echo "<div id='{$div['div_id']}' class='div-page'>";
  				echo chr(10) . chr(13);
+
+                // check if form info is set, to display div to edit info - just admin page
+                // TODO change the var form validation to session to check admin session
+                if(isset($form['id'])) {
+                    include('admin/edit.php');
+                }
 
  				// h2 title
  				if(!empty($div['div_title'])) {
@@ -36,7 +33,7 @@
  					echo str_repeat(chr(9), 3);
  					
  					if(is_null($div['div_url'])) {
- 						echo "<h2>{$div['div_title']}</h2>";
+ 						echo "<h3>{$div['div_title']}</h3>";
  						echo chr(10) . chr(13);
 					}
 					else {
@@ -73,11 +70,15 @@
 				
  			}
   		}
- 		
+
+        if(isset($form['id']['value']) && $form['id']['value'] > 0) {
+            include('admin/new.php');
+        }
+
   		echo str_repeat(chr(9), 2);
   		echo "<br class='clear' />";
   		echo chr(10) . chr(13);
 		?>
  			
 	</div>	
-	<!-- body end -->
+	<!-- container end -->

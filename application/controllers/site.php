@@ -1,20 +1,22 @@
 <?php
-class Site extends Controller {
+class Site extends CI_Controller {
 
 	public function __construct() {
-		parent::Controller();
+		parent::__construct();
 		$this->output->enable_profiler(TRUE);
 		$this->load->library('Html');
 		$this->load->model('SiteModel');	
-		$this->html->setTemplateMode('web');	
+		$this->html->setTemplateMode('web');
 	}
 	
 	private function load_template($page) {
 		
 		// preparing HTML
 		$data['page']  = $this->SiteModel->getPage($page);
-		if(empty($data['page'])) return false;
-		$data['divs']  = $this->SiteModel->getDivs($data['page'][0]['id']);
+
+        if(empty($data['page'])) return false;
+
+        $data['divs']  = $this->SiteModel->getDivs($data['page'][0]['id']);
 		
 		// preparing HEADER
 		$header['title']       = $data['page']['0']['title'];

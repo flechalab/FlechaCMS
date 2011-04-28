@@ -1,10 +1,10 @@
 <?php
-class Config extends Controller {
+class Config extends CI_Controller {
 	
 	private $html_title = 'Manutenção de Configurações do Site';
 
 	public function __construct() {
-		parent::Controller();
+		parent::__construct();
 		//$this->output->enable_profiler(TRUE);
 		$this->load->model('ConfigModel');
 		$this->load->library('Html');
@@ -16,10 +16,30 @@ class Config extends Controller {
 	 * Index function carrega lista das paginas atuais do site
 	 */
 	public function index() {
-		$data['title'] = '> Lista de Configurações do Site';
+
+        $data               = array();
+		$data['title']      = 'Lista de Configurações do Site';
+		$data['subtitle']   = '';
+		$data['submenu']    = TRUE;
+		$data['uri']        = ADMIN_URL_ADMIN;
+		$config             = $this->ConfigModel->getConfig();
+
+        var_dump($config); die();
+
+		for ( $i=0; $i < count($pages); $i++ ) {
+			$data['items'][$i]['id']      = $pages[$i]['id'];
+			$data['items'][$i]['desc']    = (!empty($pages[$i]['title'])) ?
+                                            $pages[$i]['title'] : $pages[$i]['page'];
+			$data['items'][$i]['tooltip'] = 'Atualizado em: ' .
+			                                $this->datefunctions->
+											dateTimeFormated($pages[$i]['updated_at']);
+		}
+
+
+		
 		$data['items'] = $this->ConfigModel->getConfig();
 				
-		$this->html->output('admin/config_list', $data);
+		$this->html->output('admin/list', $data);
 	}
 	
 	
@@ -66,28 +86,20 @@ class Config extends Controller {
 		//***********************************************************
 		// ao enviar formulario (post) processa gravacao de dados
 		//***********************************************************
-		else {
-			
-			// preparando data (com post)
-			$data = array_merge($data, $_POST);
-						
-			$result = $this->ConfigModel->setConfig($data);
-			
-			if($result===TRUE) {
+		else {		
+            try {
+        		// preparando data (com post)
+    			$data = array_merge($data, $_POST);
+                $this->ConfigModel->setConfig($data);
 				$view['message']  = 'Configurações foram salvas.';
 				$view['url']      = '/admin/config';
-			}
-			else {
-				// messagem q pagina ja existe
-				$view['message']  = 'Erro ao Salvar as Configurações do Site';
-				$view['url']      = 'Javascript:history.back();';
-			}	
-			
-			$template = 'admin/message';
-
-			$this->html->output($template, $view);
+                $template = 'admin/message';
+    			$this->html->output($template, $view);
+            }
+            catch ( Exception $e ) {
+                show_error($e->getMessage());
+            }
 		}
-		
 	}
 
 

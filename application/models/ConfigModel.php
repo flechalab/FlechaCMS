@@ -1,8 +1,8 @@
 <?php
-class ConfigModel extends Model {
+class ConfigModel extends CI_Model {
 	
 	public function __construct() {
-		parent::Model();
+        parent::__construct();
 	}
 	
 	public function getConfig() {
@@ -30,17 +30,32 @@ class ConfigModel extends Model {
 	}
 
 	public function insertConfig($data) {
-		$this->db->insert('site-config', $data);
+        try {
+            $this->db->insert('site-config', $data);
+        }
+        catch (Exception $e) {
+            throw new Exception('Error: ' . $e->getMessage() . chr(10));
+        }
 	}
 	
 	public function updateConfig($data) {
-		$this->db->where('config', $data['config']);
-		$this->db->update('site-config', $data);
+        try {
+            $this->db->where('config', $data['config']);
+            $this->db->update('site-config', $data);
+        }
+        catch (Exception $e) {
+            throw new Exception('Error: ' . $e->getMessage() . chr(10));
+        }
 	}
 	
 	public function deleteConfig($config) {
-		$this->db->where('config', $config);
-		$this->db->delete('site-config');
+        try {
+            $this->db->where('config', $config);
+            $this->db->delete('site-config');
+        }
+        catch (Exception $e) {
+            throw new Exception('Error: ' . $e->getMessage() . chr(10));
+        }
 	}
 	
 }

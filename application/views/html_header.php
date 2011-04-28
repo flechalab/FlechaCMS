@@ -11,7 +11,8 @@
 	<link rel="shortcut icon" type="image/x-icon" href="./lib/favicon.ico" />
 
 	<!-- css -->
-	<link rel='stylesheet' type='text/css' href='/lib/css/style.css' />
+	<link rel='stylesheet' type='text/css' href='/lib/css/all.css' />
+    <link rel='stylesheet' type='text/css' href='/lib/css/style.css' />
 
 	<!-- jquery -->
 	<script type='text/javascript' src='/lib/js/jquery/jquery.js'></script>

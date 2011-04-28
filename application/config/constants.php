@@ -54,5 +54,8 @@ define('ADMIN_NAVIGATION_NEW',  'Novo');
 define('ADMIN_NAVIGATION_BACK', 'Voltar');
 define('ADMIN_NAVIGATION_SAVE', 'Salvar');
 
+define('ADMIN_URL_ADMIN', '/admin');
+define('ADMIN_URL_PAGES', '/admin/pages');
+
 /* End of file constants.php */
 /* Location: ./system/application/config/constants.php */

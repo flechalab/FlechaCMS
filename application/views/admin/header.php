@@ -10,8 +10,11 @@
 	<meta name="description" content="<?php echo $description ?>" />
 	
 	<link rel="shortcut icon" type="image/x-icon" href="/lib/favicon.ico" />
-	
+
+    <!-- css files -->
+    <link rel="stylesheet" type="text/css" href="/lib/css/all.css" />
 	<link rel="stylesheet" type="text/css" href="/lib/css/admin.css" />
+    <link rel="stylesheet" type="text/css" href="/lib/css/icons.css" />
 	
 	<!-- jquery -->
 	<script type="text/javascript" src="/lib/js/jquery/jquery.js"></script>
@@ -28,6 +31,6 @@
 
 </head>
 
-<body>
+<body class="admin">
 
 <div id="wrapper">
