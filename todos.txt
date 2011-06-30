@@ -3,7 +3,10 @@ API
 ===
 - Controle de Login ( Usuarios )
 - Controle de sessao de acesso
+- Reestruturar Classe Usuario
+- Reestruturar Classe Configuracoes
 * Constants
+* Del Page/Div, need confirmation, true in del method
 * Del Page, check if Divs exists
 
 
@@ -12,6 +15,8 @@ LITE/MOBILE
 (HTML/CSS)
 ============
 - Controle de Users
+- Controle de Configuracoes
+- Configuracoes
 - CSS
 - Layout images, degrades, etc...
 

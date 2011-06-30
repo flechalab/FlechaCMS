@@ -1,4 +1,4 @@
-<?php
+    <?php
 /**
  * Classe do CMS para Manutencao das Paginas do Site
  * @package flecha-site
@@ -11,12 +11,18 @@ class Pages extends CI_Controller {
 	
 	public function __construct() {
 		parent::__construct();
+        // profiler
 		$this->output->enable_profiler(TRUE);
+        // model layer
 		$this->load->model('SiteModel');
+        // html template constructor
 		$this->load->library('Html');
+        $this->html->setTemplateMode('adm');
 		$this->load->library('DateFunctions');
-		$this->html->setTemplateMode('adm');
-		//Admin::checkLogin();
+        // login validation
+        $this->load->library('session');
+        $this->load->library('CheckLogin');
+        $this->checklogin->check();
 	}
 	
 	/*

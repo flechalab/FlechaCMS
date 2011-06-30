@@ -54,9 +54,13 @@ $route['admin/pages/(:num)/divs']            = "admin/divs";
 $route['admin/pages/(:num)/divs/(:any)/del'] = "admin/divs/del/$2/$1";
 $route['admin/pages/(:num)/divs/(:any)']     = "admin/divs/set/$2/$1";
 
+// login options
+$route['admin/login']                        = "admin/admin/login";
+$route['admin/logon']                        = "admin/admin/logon";
+$route['admin/logout']                       = "admin/admin/logout";
+
 // del pages
 $route['admin/(:any)/del/(:num)']            = "admin/$1/del/$2";
-
 $route['admin/(:any)/(:num)']                = "admin/$1/set/$2";
 $route['admin/(:any)']                       = "admin/$1";
 $route['(:any)']                             = "site/$1";

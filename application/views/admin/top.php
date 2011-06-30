@@ -30,10 +30,14 @@ if(isset($submenu) && $submenu==TRUE) { ?>
             $back .= '/' . $this->uri->segment(3);
         }
 
-        ?>
-        <a href="<?php echo $back ?>">Voltar</a>
+        $back_btn_disabled = array('login', 'logon');
         
-        <?php
+        if( !in_array($this->uri->segment(2), $back_btn_disabled) ) {
+            ?>
+            <a href="<?php echo $back ?>">Voltar</a>
+            <?php
+        }
+        
         if(!isset($form)) {
         //if(!isset($form['id']['value']) && $form['id']['value'] > 0) {
             ?>
