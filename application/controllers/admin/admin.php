@@ -98,8 +98,7 @@ class Admin extends CI_Controller {
 	}
 	
 	public function logout() {
-		unset($_SESSION);
-		destroy($_SESSION);
+        $this->session->sess_destroy();
 		header('Location: /');
 	}
 
