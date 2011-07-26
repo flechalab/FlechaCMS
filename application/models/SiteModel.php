@@ -40,7 +40,7 @@ class SiteModel extends CI_Model {
         }
     	catch(Exception $e) {
             //$this->log     = false;
-   //         $this->log_msg = 'Erro:' . $e->getMessage();
+            //$this->log_msg = 'Erro:' . $e->getMessage();
             throw new Exception('Error: ' . $e->getMessage() . chr(10));
         }
 	}

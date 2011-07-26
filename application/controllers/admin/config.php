@@ -1,20 +1,30 @@
 <?php
 class Config extends CI_Controller {
 	
+    /**
+     * html title default to config page
+     * @var string
+     */
 	private $html_title = 'Manutenção de Configurações do Site';
 
+    /**
+     * Load libraries, models and templates
+     */
 	public function __construct() {
 		parent::__construct();
-		//$this->output->enable_profiler(TRUE);
+        
+        // TODO config options
+        echo 'Developing'; die();
+        
+		$this->output->enable_profiler(TRUE);
 		$this->load->model('ConfigModel');
 		$this->load->library('Html');
 		$this->html->setTemplateMode('adm');
 	}
 
-
-	/*
-	 * Index function carrega lista das paginas atuais do site
-	 */
+    /**
+     * Index function carrega lista das paginas atuais do site
+     */
 	public function index() {
 
         $data               = array();
@@ -43,15 +53,11 @@ class Config extends CI_Controller {
 	}
 	
 	
-	/*
-	 * funcao com tomada de decisao para inserir ou atualizar registro de pagina do site
-	 */
-	public function set() {
-		
-		//***********************************************************
-		// preparando recurso do CI, validacoes, info de view e data
-		//***********************************************************
-		
+    /**
+     * set/update site's configurations 
+     */
+    public function set() {
+				
 		// helper -> form, url
 		$this->load->helper(array('form','url'));
 
@@ -65,12 +71,7 @@ class Config extends CI_Controller {
 		// preparando data
 		$data       = array('id'=>'', 'config'=>'', 'value'=>'');
 		$data['id'] = $this->uri->segment(4);
-		
-		
-		//***********************************************************
-		// carregando formulario (sem post) - opcao de novo ou edicao
-		//***********************************************************
-		
+				
 		if($this->form_validation->run()==FALSE) {
 			
 			// carrega valores do registro 
@@ -82,10 +83,6 @@ class Config extends CI_Controller {
 			
 			$this->html->output($template, $data);
 		}
-		
-		//***********************************************************
-		// ao enviar formulario (post) processa gravacao de dados
-		//***********************************************************
 		else {		
             try {
         		// preparando data (com post)
@@ -110,7 +107,12 @@ class Config extends CI_Controller {
 		$this->html->output('admin/message', $data);
 	}
 	
-	
+
+    /**
+     * check if user/name is correct
+     * @param  string  $value
+     * @return boolean 
+     */
 	public function check_name($value) {
 
 		$rule = '#^[a-zA-Z0-9 ]*$#i';

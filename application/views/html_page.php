@@ -72,7 +72,7 @@
   		}
 
         if(isset($form['id']['value']) && $form['id']['value'] > 0) {
-            include('admin/new.php');
+            include('admin' . DIRECTORY_SEPARATOR . 'new.php');
         }
 
   		echo str_repeat(chr(9), 2);

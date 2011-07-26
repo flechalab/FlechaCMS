@@ -1,8 +1,8 @@
 <?php
-
 /**
-* Classe do CMS para Manutencao das Divs de cada pagina do Site
- * @package flecha-site
+ * cms class to manage page's divs content
+ * @package FlechaCMS
+ * @author  Fernando Dias
  */
 class Divs extends CI_Controller {
 
@@ -14,11 +14,11 @@ class Divs extends CI_Controller {
     private $id        = 0;
 
     /**
-     * id (tag) da div
+     * tag (id) da div
      * @access private
      * @var string
      */
-    private $div_id    = '';
+    private $tag       = '';
 
     /**
      * id da page ref. div
@@ -41,6 +41,10 @@ class Divs extends CI_Controller {
      */
     private $div       = array();
 
+    
+    /**
+     * load libraries, model and templates
+     */
 	public function __construct() {
 		parent::__construct();
 		$this->output->enable_profiler(TRUE);
@@ -50,19 +54,20 @@ class Divs extends CI_Controller {
 		$this->html->setTemplateMode('adm');
     }
 	
-	
-	/*
-	 * Index function carrega lista das paginas atuais do site
-	 */
+    /**
+     * do nothing
+     */
 	function index() {
         header('Location:/admin/pages');
 	}
 	
 	
-	/*
-	 * funcao com tomada de decisao para inserir ou atualizar registro de pagina do site
-	 */
-	function set($id, $page) {
+    /**
+     * form - set/update page's div 
+     * @param integer $id
+     * @param string  $page 
+     */
+	function setUp($tag, $page) {
 		//***********************************************************
 		// preparando recurso do CI, validacoes, info de view e data
 		//***********************************************************
@@ -73,10 +78,10 @@ class Divs extends CI_Controller {
         $this->load->library('NormalizeChar');   // ext lib
 
         $this->setPage($page);
-        $this->setDivId($id);
-        $this->setDiv();
+        $this->setId($tag);
 
-        $this->getPageData($page);
+        $this->setPageData($page);
+        $this->setDiv();
 
         foreach ($this->div as $key => $item) {
             $this->form_validation->set_rules($key, $item['title'], $item['validation']);
@@ -109,6 +114,11 @@ class Divs extends CI_Controller {
 		
 	}
 
+    /**
+     * delete page's div 
+     * @param integer $id
+     * @param string  $id_page 
+     */
 	public function del($id, $id_page) {
         try {
             $this->SiteModel->deleteDiv($id, $id_page);
@@ -121,26 +131,48 @@ class Divs extends CI_Controller {
         }
 	}
 
-    /*
-     * getting id from div
-     **/
-    private function getDivId() {
-		return $this->div_id;   
-    }
-
-    /*
+    /**
      * getting id (autonum) from div
-     **/
+     * @return integer
+     */
     private function getId() {
 		return $this->id;
     }
 
-    private function setDivId($div_id) {
+    /**
+     * return actual div's id tag
+     * @return string
+     */
+    private function getTag() {
+		return $this->tag;   
+    }
+
+    /**
+     * return page id
+     * @return integer
+     */
+    private function getPage() {
+        return $this->page;
+    }
+
+    /**
+     * return array with div's data 
+     * @return type 
+     */
+	private function getDiv() {
+		return $this->div;
+	}
+    
+    /**
+     * get div data from database and set obj property
+     * @param string $div_id 
+     */
+    private function setId($tag) {
         try {
-            $this->id     = 0;
-            $this->div_id = $div_id;
-            if($div_id!='0') {
-                $div       = $this->SiteModel->getDivs($this->page, $div_id);
+            $this->id    = 0;
+            $this->tag   = $tag;
+            if($tag!='0') {
+                $div       = $this->SiteModel->getDivs($this->page, $tag);
                 $this->id  = $div[0]['id'];
             }
         }
@@ -149,30 +181,30 @@ class Divs extends CI_Controller {
         }
     }
     
-    private function getPage() {
-        return $this->page;
-    }
-
+    /**
+     * set page id 
+     * @param integer $page 
+     */
     private function setPage($page) {
         $this->page = $page;
     }
 
-    private function getPageData() {
+    /**
+     * get page data from database and set property
+     */
+    private function setPageData() {
         $this->page_data = $this->SiteModel->getPageByID($this->getPage());
     }
-
-	private function getDiv() {
-		return $this->div;
-	}
-    /*
+    
+    /**
      * array with data to html/form
-     **/
+     */
     private function setDiv() {
 
-		$this->div = array('div_id'      => array('title'     => 'Id do Bloco',
+		$this->div = array('div_id'      => array('title'     => 'Id do Bloco (letras/numeros sem espaços)',
                                                   'validation'=> 'required|alpha_numeric|min_length[1]|max_length[50]',
                                                   'type'      => 'input',
-                                                  'value'     => ($this->getDivId()=='0') ? '' : $this->getDivId() ),
+                                                  'value'     => ($this->getTag()=='0') ? '' : $this->getTag() ),
                            'id'          => array('title'     => '',
                                                   'validation'=> '',
                                                   'type'      => 'input',
@@ -204,6 +236,10 @@ class Divs extends CI_Controller {
     }
 
 
+    /**
+     * insert/update data from div 
+     * @param array $data 
+     */
 	private function setData($data) {
 		// preparando data (com post)
 		$data['div_id']   = strtolower($data['div_id']);
@@ -225,6 +261,9 @@ class Divs extends CI_Controller {
         }
 	}
 
+    /**
+     * array with data to generate div's form 
+     */
     private function form() {
         // carrega formulario
         $template = array('admin/form');

@@ -2,10 +2,9 @@
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
- * 
  * Class to generate general HTML 
- * @author fernandodias
- *
+ * @package FlechaCMS
+ * @author  Fernando Dias
  */
 Class Html {
 

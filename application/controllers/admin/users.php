@@ -4,8 +4,12 @@ class Users extends CI_Controller {
 	private $html_title = 'Manutenção de Usuários da área administrativa do Site';
 
 	public function __construct() {
-		parent::Controller();
-		//$this->output->enable_profiler(TRUE);
+		parent::__construct();
+        
+        //TODO - user management
+        echo 'Developing'; die();
+        
+		$this->output->enable_profiler(TRUE);
 		$this->load->model('UsersModel');
 		$this->load->library('Html');
 		$this->html->setTemplateMode('adm');

@@ -1,11 +1,23 @@
 <?php
-
+/**
+ * admin area front controller 
+ * @package FlechaCMS
+ * @author  Fernando Dias
+ */
 class Admin extends CI_Controller {
-	
+
+    /**
+     * array with data to construct the login form (title, labels, etc...)
+     * @var array
+     */
     private $form;
 
+    /**
+     * Load libraries, models and templates
+     */
 	public function __construct() {
 		parent::__construct();
+        $this->output->enable_profiler(TRUE);
         // html template constructor
 		$this->load->library('Html');
         // model layer
@@ -16,12 +28,17 @@ class Admin extends CI_Controller {
         $this->load->library('session');
         $this->load->library('CheckLogin');
 	}
-	
+    
+    
+	/**
+     * index admin page, check if user is logged first, otherwise go to login page
+     */
 	public function index() {
 
         // login validation
         $this->checklogin->check();
         
+        // html array data
         $html = array();
 		$html['title']     =  'Manutenção Geral do Site';
 		$html['subtitle']  =  'Escolha uma das opções abaixo:';
@@ -37,26 +54,18 @@ class Admin extends CI_Controller {
 			                               'desc'    => 'Configurações',
 								   		   'tooltip' => 'Configurações do Site') );
 
+        // html template
 		$this->html->output('admin/list', $html);
 	}
 	
+    /**
+     * login page
+     */
 	public function login() {
-/*
-        $this->load->library('form_validation'); // ci  lib
-        $this->load->library('ExtraValidation'); // ext lib
-        $this->load->library('NormalizeChar');   // ext lib
-*/
+
         // setting array with form data
         $this->form();
 
-        /*
-        // set das regras de validacao
-		foreach($this->form as $key => $item) {
-			$this->form_validation->set_rules($key, $item['title'], $item['validation']);
-		}
-
-        $this->form_validation->set_error_delimiters('<div class="form-error">', '</div>');
-        */
         // carrega formulario
         $template = array( 'admin/form' );
 
@@ -72,36 +81,38 @@ class Admin extends CI_Controller {
         $this->html->output($template, $data);
 	}
 
+    /**
+     * validate login
+     */
 	public function logon() {
 
         $this->form();
         
-        if(!isset($_POST)) {
-            header('Location: /admin/login');
-        }
-        
-        $vars = $_POST;
-        
-		if( $this->form_validation->run() == FALSE ) {
-            header('Location: /admin/login');
-		}
-        else {
-
+        if( isset($_POST) && $this->form_validation->run() ) {
+            
             $user = $this->UserModel->getUser($_POST['user'], 'user');
 
             if( ($user==true) && (count($user)==1) && ($user[0]['pass']==md5($_POST['pass'])) ) {
                 $this->session->set_userdata('adm_uid', $user[0]['user']);
                 $this->session->set_userdata('adm_uname', $user[0]['name']);
-                header('Location: /admin');
             }
+            
         }
+        
+        header('Location: /admin');
 	}
 	
+    /**
+     * logout admin area
+     */
 	public function logout() {
         $this->session->sess_destroy();
 		header('Location: /');
 	}
 
+    /**
+     * set the array form property, set form libraries and execute validation
+     */
     public function form() {
 
         $this->form = array( 'user' => array( 'title'     => 'Usuário',
@@ -119,7 +130,7 @@ class Admin extends CI_Controller {
         $this->load->library('ExtraValidation'); // ext lib
         $this->load->library('NormalizeChar');   // ext lib
 
-        // set das regras de validacao
+        // set validation rules
 		foreach($this->form as $key => $item) {
 			$this->form_validation->set_rules($key, $item['title'], $item['validation']);
 		}
