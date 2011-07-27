@@ -17,7 +17,7 @@ class Admin extends CI_Controller {
      */
 	public function __construct() {
 		parent::__construct();
-        $this->output->enable_profiler(TRUE);
+        //$this->output->enable_profiler(TRUE);
         // html template constructor
 		$this->load->library('Html');
         // model layer

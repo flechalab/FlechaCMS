@@ -31,13 +31,13 @@ class Pages extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
         // profiler
-		$this->output->enable_profiler(TRUE);
+		//$this->output->enable_profiler(TRUE);
         // model layer
 		$this->load->model('SiteModel');
         // html template constructor
 		$this->load->library('Html');
-        $this->html->setTemplateMode('adm');
 		$this->load->library('DateFunctions');
+        $this->html->setTemplateMode('adm');
         // login validation
         $this->load->library('session');
         $this->load->library('CheckLogin');

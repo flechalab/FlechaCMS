@@ -47,11 +47,18 @@ class Divs extends CI_Controller {
      */
 	public function __construct() {
 		parent::__construct();
-		$this->output->enable_profiler(TRUE);
+        // profiler
+		//$this->output->enable_profiler(TRUE);
+        // model layer
 		$this->load->model('SiteModel');
+        // html template constructor
 		$this->load->library('Html');
 		$this->load->library('dateFunctions');
 		$this->html->setTemplateMode('adm');
+        // login validation
+        $this->load->library('session');
+        $this->load->library('CheckLogin');
+        $this->checklogin->check();
     }
 	
     /**
