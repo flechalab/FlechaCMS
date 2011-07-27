@@ -17,21 +17,11 @@ $(document).ready(function() {
         $('.properties-form').slideToggle('slow');
     });
 
-    $('#container .div-page').hover(
-                                    function() {
-                                        /*
-                                        $(this).append('<div class="div-page-fade"></div>')
-                                        $('.div-page-fade', this)
-                                                .width($(this).outerWidth())
-                                                .height($(this).outerHeight())
-                                                .html($('.div-page-buttons').html());
-                                        */
-                                    },
-                                    function() {
-                                        //$('.div-page-fade', this).remove();
-                                    });
-
-
+    $('#container .div-page .edit-block').click( function(e) {
+        $('h3', $(this).parent()).slideToggle('slow');
+        $('.content', $(this).parent()).slideToggle('slow');
+    });
+        
 }); // end $(document).ready
 
 function list_back(url) {
