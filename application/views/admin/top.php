@@ -1,7 +1,7 @@
 <?php
 
 if(!empty($title)) {
-    echo "<h1>{$title}</h1>";
+    echo "<h1 class=\"radius-bottom\">{$title}</h1>";
 }
 
 if(!empty($subtitle)) {
@@ -34,17 +34,18 @@ if(isset($submenu) && $submenu==TRUE) { ?>
         
         if( !in_array($this->uri->segment(2), $back_btn_disabled) ) {
             ?>
-            <a href="<?php echo $back ?>">Voltar</a>
+            <a href="<?php echo $back ?>" class="button">Voltar</a>
             <?php
         }
         
         if(!isset($form)) {
         //if(!isset($form['id']['value']) && $form['id']['value'] > 0) {
             ?>
-            <a href="<?php echo '/' . $this->uri->uri_string() ?>/0">Novo</a>
+            <a href="<?php echo '/' . $this->uri->uri_string() ?>/0" class="button">Novo</a>
             <?php
         }
         ?>
+            <br class="clear" />
     </div>
 <?php
 }

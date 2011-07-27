@@ -52,11 +52,14 @@
             ?>
 
             <div class="buttons">
+                <input type="submit" id="saveitem" value="Salvar" class="button" />
+
                 <?php if( isset($form['id']['value']) && $form['id']['value'] > 0 && 
                          !isset($form['div_id']) ) { ?>
-                <a href="<?php echo $uri .'/del/' . $form['id']['value'] ?>" id="deleteitem">Excluir</a>
+                    <a href="<?php echo $uri .'/del/' . $form['id']['value'] ?>" id="deleteitem" class="button">Excluir</a>
                 <?php } ?>
-                <input type="submit" id="saveitem" value="Salvar" />
+
+                <br class="clear" />
             </div>
 
         </fieldset>	
