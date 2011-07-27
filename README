@@ -1,17 +1,29 @@
-------------------------
-Projeto: Flecha-Site CMS
-------------------------
+------------------
+Project: FlechaCMS
+------------------
 
-Projeto com um simples CMS para gerenciamento e manutenção de 
-pequenos portais e hotsites.
+
+Simple CMS project to management small websites and hotsites.
+
+The site's data/information is generated using a database
+
+The Layout/Structure is defined with the CSS file (style.css).
+
+The project is based on CodeIgniter 2 framework, using MySQL Database.
+
+-------------------------------------------------------------------------------
+
+Projeto com um simples CMS para gerenciamento e manutenção de pequenos portais 
+e hotsites.
 
 O site é gerado dinamicamente com os dados do banco de dados.
 
 A sua estrutra/layout é definida de acordo com o CSS (style.css) existente.
 
-O projeto é baseado no Framework CodeIgniter 2 (CI), além de atualmente usar bando de dados MYSQL.
+O projeto é baseado no Framework CodeIgniter 2 (CI), além de atualmente usar 
+banco de dados MYSQL.
 
-===============================================================
+===============================================================================
 
 Etapa 1 API 
 
@@ -26,50 +38,50 @@ Etapa 3 Lite Version
 
 Etapa 4 Rich Version
 
-===============================================================
+===============================================================================
 
-
-Estrutura do Projeto (/application do framework):
+Project Structure (CI framework folder /application):
 
 /config
-	config.php					arquivo de configuracao da aplicacao
-	constants.php				list de constantes utilizadas no site (em implantacao)
-	routes.php					regras de roteamento de uris
+	config.php					Config File
+	constants.php				Constant list
+	routes.php					Routes Rules of URI's
 	
 /controllers
-	site.php					Controle Principal de geracao de paginas da app
+	site.php					FrontEnd Controller to generate HTML files
 	/admin
-		Admin.php				Validacao de Login / Pagina Inicial do CMS
-		Pages.php				Metodos de recuperacao/manutencao de dados referentes a pages (paginas)
-		Divs.php				Metodos de recuperacao/manutencao de dados referentes as divs das paginas
-		Config.php				Configuracoes gerais da app
-		Users.php				Gerenciamento de Usuarios
+		Admin.php				Login / Default CMS Page
+		Pages.php				Class to manage Page data
+		Divs.php				Class to manage Div data
+		Config.php				CMS Config data manage
+		Users.php				Class to manage User data
 	
 /libraries
-		DateFunctions.php		Funcoes para formatacao de datas.
-		ExtraValidation.php		Validacoes Extras para Formulario do CI
-		Html.php				Classe de gerenciamento para printar template do HTML, 
-								conforme a solicitacao da app. Utiliza metodos do CID (load->view).
-		NormalizeChar.php		Metodos para normalize de texto, remocao e substituicao de espacos.
-		Tinymce.php				Class para controle do editor Tinymce no CI.
+		DateFunctions.php		Functions to date format
+		ExtraValidation.php		Extra Form Validation Rules
+		Html.php				Management, output and print HTML required.
+								It uses CI load->view
+		NormalizeChar.php		Normalize, remove/replace space in strings
+		Tinymce.php				Put Tinymce in CI form's.
 		
 /models
-		ConfigModel.php			Class com getters/setters na table config.
-		SiteModelo.php			Class com getters/setters na table pages/divs.
-		UsersModel.php			Class com getters/setters na table users.
+		ConfigModel.php			Class with getters/setters from config talbe
+		SiteModelo.php			Class with getters/setters from page/div table
+		UsersModel.php			Class with getters/setters from user table
 		
 /views
-	html_footer.php				Rodape do html da pagina
-	html_header.php				Cabecalho do html (header) da pagina
-	html_menu.php				Parte superior e Menu do Site
-	html_page.php				View que monta dinamicamente os blocos (divs) vinculados a pagina
-								solicitada. Dados gerado em array pelo controle.
+	html_footer.php				Footer's html
+	html_header.php				Header's html
+	html_menu.php				Site's top block and menu 
+	html_page.php				View to construct blocks (divs) attached to 
+	                            requested page. Data generated in an array 
+	                            by a control class
 	/views/admin
-		new.php					Template com div para inserir nova div na pagina
-		edit.php				Div para editar div da pagina
-		footer.php				Rodape da area admin
-		form.php				Template com form e loop para habilitar campos para edicao
-		header.php				Cabecalho da area admin
-		list.php				Template com loop para gerar lista de itens
-		message.php				Template para messagens gerais 
-		top.php					Menu Superior da area admin
+		new.php					Block to inset new page's div 
+		edit.php				Block to edit page's div
+		footer.php				Admin's footer
+		form.php				Generate form with loop to display fields
+		header.php				Admin's header
+		list.php				Template with loop to generetad items list
+		message.php				Template to messages
+		top.php					Admin's Top Menu
