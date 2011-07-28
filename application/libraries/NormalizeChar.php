@@ -24,4 +24,5 @@ class NormalizeChar {
     function replaceSpaces($string, $char='-') {
         return str_replace(' ', $char, $string);
     }
+
 }

@@ -1,5 +1,7 @@
-<?php 
-if (!defined('BASEPATH')) exit('No direct script access allowed');
+<?php
+
+if (!defined('BASEPATH'))
+    exit('No direct script access allowed');
 
 /**
  * TinyMCE Inclusion Class
@@ -9,14 +11,14 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
  * @category      WYSIWUG
  * @author        Flechaweb
  */
-
 class Tinymce {
-/*
- * Create Head Code 
- * $data ['head'] = $this->tinymce->createhead('mode','theme','toolbar loc','toolbar align','resizable')
- */
-	public function header($in = 'textarea', $theme = 'advanced', $posX = 'left', $posY = 'top', $resizable = 'false') { 
-		
+    /*
+     * Create Head Code 
+     * $data ['head'] = $this->tinymce->createhead('mode','theme','toolbar loc','toolbar align','resizable')
+     */
+
+    public function header($in = 'textarea', $theme = 'advanced', $posX = 'left', $posY = 'top', $resizable = 'false') {
+
         return <<<EOF
         
 				<!-- tinymce -->
@@ -80,8 +82,8 @@ class Tinymce {
 				});
 				</script>
 EOF;
-
     }
-    
+
 }
+
 ?>
