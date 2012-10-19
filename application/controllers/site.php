@@ -19,34 +19,30 @@ class Site extends CI_Controller {
     }
 
     /**
-     * load page's template 
+     * load page's template
      * @param  string $page
      */
-    private function load_template($page) {
-
-        // preparing HTML
-        $data['page'] = $this->SiteModel->getPage($page);
-
-        if (empty($data['page']))
-            return false;
-
-        $data['divs'] = $this->SiteModel->getDivs($data['page'][0]['id']);
-
-        // preparing HEADER
-        $header['title'] = $data['page']['0']['title'];
-        $header['description'] = $data['page']['0']['tooltip'];
-
+    private function load_content($full=true) {
+        $c     = 'content';
+        $data  = array('header' => array('description' => 'flechaweb'));
+        $pages = $this->SiteModel->getPage();
+        foreach ($pages as $page) {
+            $pageId                      = $page['id'];
+            $pageName                    = $page['page'];
+            $data[$c][$pageName]['info'] = $this->SiteModel->getPage($pageName);
+            $data[$c][$pageName]['divs'] = $this->SiteModel->getDivs($pageId);
+        }
+        //var_dump($data);
         // load HTML class
-        $this->html->output('html_page', $data, $header);
+        $this->html->output('html_page', $data);
     }
-
-    // TODO a general method to get each template file
 
     /**
      * call load_template method to load template
      */
     public function index() {
-        $this->load_template('home');
+        $this->html->displayHeaderAndFooter(true);
+        $this->load_content();
     }
 
     /**

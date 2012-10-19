@@ -9,14 +9,17 @@ class SiteModel extends CI_Model {
         parent::__construct();
     }
 
-    public function getPage($page=NULL, $order='page') {
+    public function getPage($page=NULL, $order='id') {
         $this->db->where('id_company', COMPANY_ID);
         if ($page != NULL) {
             $this->db->where('page', $page);
         }
         $this->db->order_by($order, 'asc');
         $query = $this->db->get('site-pages');
-        return $query->result_array();
+        if ($page != NULL)
+            return $query->row_array();
+        else
+            return $query->result_array();
     }
 
     public function getPageByID($id) {
