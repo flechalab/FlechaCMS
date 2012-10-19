@@ -13,14 +13,12 @@
             <li><a href="/servicos" title="Serviços">Serviços</a>|</li>
             <li><a href="/portifolio" title="Portifolio">Portifolio</a>|</li>
             <li><a href="/contato" title="Contato">Contato</a></li>
-            <!-- 
+            <!--
 				<li><a href="/blog" title="Blog">Blog</a></li>
 				 -->
 
         </ul>
-
-        <p>© FlechaWeb - <?php echo date('Y') ?></p>
-
+        <p>FlechaWeb [<?php echo date('Y') ?>]</p>
     </div>
 
 </div>
@@ -37,7 +35,7 @@
     try {
         var pageTracker = _gat._getTracker("UA-12547861-1");
         pageTracker._trackPageview();
-    } 
+    }
     catch(err) {}
 </script>
 

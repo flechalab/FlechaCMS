@@ -1,13 +1,13 @@
-    <!-- container start -->	
+    <!-- container start -->
     <div id="container">
 
         <?php
         echo chr(10) . chr(13);
 
         // titulo da pagina (se houver)
-        if (!empty($page[0]['title'])) {
+        if (!empty($info['title'])) {
             echo str_repeat(chr(9), 2);
-            echo "<h2>{$page[0]['title']}</h2>";
+            echo "<h2>{$info['title']}</h2>";
             echo chr(10) . chr(13);
         }
 
@@ -78,5 +78,5 @@
         echo chr(10) . chr(13);
         ?>
 
-    </div>	
+    </div>
     <!-- container end -->

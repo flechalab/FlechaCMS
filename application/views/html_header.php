@@ -7,7 +7,7 @@
         <meta name="author" content="Flecha Web Desenvolvimento" />
         <meta http-equiv="Content-Language" content="pt-br"/>
         <meta name="description" content="<?php echo SITE_NAME ?> : <?php echo $description ?>" />
-        <meta name="google-site-verification" content="hE_Q9iBqi33CeZvse-Z-vNBcVLKLic_x7cGKCARDJc8" />	
+        <meta name="google-site-verification" content="hE_Q9iBqi33CeZvse-Z-vNBcVLKLic_x7cGKCARDJc8" />
         <link rel="shortcut icon" type="image/x-icon" href="./lib/favicon.ico" />
 
         <!-- css -->
@@ -19,14 +19,14 @@
 
         <script src="http://www.google.com/jsapi"></script>
         <script>
-            // TODO 
+            // TODO
             // testar se consegue fazer o load do google senao buscar local
-            google.load("jquery", "1.4.2");
+            google.load("jquery", "1.8.2");
         </script>
 
         <!-- jquery tools-tooltip -->
         <script type="text/javascript" src="/lib/js/jquery-tools/tools.tooltip.js"></script>
-        <script type="text/javascript" src="/lib/js/jquery-tools/tools.tooltip.slide.js"></script>			
+        <script type="text/javascript" src="/lib/js/jquery-tools/tools.tooltip.slide.js"></script>
 
         <!-- jquery tools-tabs -->
         <script type="text/javascript" src="/lib/js/jquery-tools/tools.tabs.js"></script>
@@ -37,17 +37,13 @@
         <script type='text/javascript' src='/lib/js/functions.js'></script>
 
         <!-- aditional css -->
-        <?php if (isset($css))
-            echo $css ?>
+        <?php if (isset($css)) echo $css ?>
 
         <!-- aditional js -->
-<?php if (isset($js))
-    echo $js ?>
+        <?php if (isset($js)) echo $js ?>
 
         <!-- aditional scripts -->
-<?php if (isset($scripts))
-    echo $scripts ?>
-
+        <?php if (isset($scripts)) echo $scripts ?>
 
     </head>
 
