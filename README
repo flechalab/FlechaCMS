@@ -11,31 +11,16 @@ The Layout/Structure is defined with the CSS file (style.css).
 The project is based on CodeIgniter 2 framework, using MySQL Database.
 
 -------------------------------------------------------------------------------
-
-Projeto com um simples CMS para gerenciamento e manutenção de pequenos portais 
+(pt-br)
+Projeto com um simples CMS para gerenciamento e manutenção de pequenos portais
 e hotsites.
 
 O site é gerado dinamicamente com os dados do banco de dados.
 
 A sua estrutra/layout é definida de acordo com o CSS (style.css) existente.
 
-O projeto é baseado no Framework CodeIgniter 2 (CI), além de atualmente usar 
+O projeto é baseado no Framework CodeIgniter 2 (CI), além de atualmente usar
 banco de dados MYSQL.
-
-===============================================================================
-
-Etapa 1 API 
-
-Etapa 2 MVC 
-      2.1 Model
-      2.2 Controller
-      2.3 View
-
-Etapa 3 Lite Version
-      3.1 Html
-      3.2 CSS
-
-Etapa 4 Rich Version
 
 ===============================================================================
 
@@ -45,7 +30,7 @@ Project Structure (CI framework folder /application):
 	config.php					Config File
 	constants.php				Constant list
 	routes.php					Routes Rules of URI's
-	
+
 /controllers
 	site.php					FrontEnd Controller to generate HTML files
 	/admin
@@ -54,7 +39,7 @@ Project Structure (CI framework folder /application):
 		Divs.php				Class to manage Div data
 		Config.php				CMS Config data manage
 		Users.php				Class to manage User data
-	
+
 /libraries
 		DateFunctions.php		Functions to date format
 		ExtraValidation.php		Extra Form Validation Rules
@@ -62,21 +47,21 @@ Project Structure (CI framework folder /application):
 								It uses CI load->view
 		NormalizeChar.php		Normalize, remove/replace space in strings
 		Tinymce.php				Put Tinymce in CI form's.
-		
+
 /models
 		ConfigModel.php			Class with getters/setters from config talbe
 		SiteModelo.php			Class with getters/setters from page/div table
 		UsersModel.php			Class with getters/setters from user table
-		
+
 /views
 	html_footer.php				Footer's html
 	html_header.php				Header's html
-	html_menu.php				Site's top block and menu 
-	html_page.php				View to construct blocks (divs) attached to 
-	                            requested page. Data generated in an array 
+	html_menu.php				Site's top block and menu
+	html_page.php				View to construct blocks (divs) attached to
+	                            requested page. Data generated in an array
 	                            by a control class
 	/views/admin
-		new.php					Block to inset new page's div 
+		new.php					Block to inset new page's div
 		edit.php				Block to edit page's div
 		footer.php				Admin's footer
 		form.php				Generate form with loop to display fields
